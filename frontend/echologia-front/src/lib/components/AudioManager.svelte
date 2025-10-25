@@ -7,6 +7,7 @@
 		filename: string;
 		date: string;
 		labels: string[];
+		criticality: number;
 	}
 
 	let searchQuery = $state('');
@@ -18,31 +19,36 @@
 			id: 1,
 			filename: 'Rec.001.wav',
 			date: 'Apr, 12, 2025',
-			labels: ['Persona Recognition', 'Max Mustermann']
+			labels: ['Persona Recognition', 'Max Mustermann'],
+			criticality: 5
 		},
 		{
 			id: 2,
-			filename: 'Rec.001.wav',
+			filename: 'movie.mp4',
 			date: 'Apr, 12, 2025',
-			labels: ['Commander conversation', 'Background activity']
+			labels: ['Commander conversation', 'Background activity'],
+			criticality: 3
 		},
 		{
 			id: 3,
-			filename: 'Rec.001.wav',
+			filename: 'Mustermann.mp3',
 			date: 'Apr, 12, 2025',
-			labels: ['Persona Recognition', 'Max Mustermann']
+			labels: ['Persona Recognition', 'Max Mustermann'],
+			criticality: 2
 		},
 		{
 			id: 4,
-			filename: 'Rec.001.wav',
+			filename: 'Train_Noises.wav',
 			date: 'Apr, 12, 2025',
-			labels: ['Location Identification', 'Niu-York', 'Train noises']
+			labels: ['Location Identification', 'Niu-York', 'Train noises'],
+			criticality: 2
 		},
 		{
 			id: 5,
-			filename: 'Rec.001.wav',
+			filename: 'Nice-river-sounds.mp3',
 			date: 'Apr, 12, 2025',
-			labels: ['Noises', 'River']
+			labels: ['Noises', 'River'],
+			criticality: 1
 		}
 	];
 
@@ -84,6 +90,40 @@
 		const statusClass = playingId === fileId ? 'bg-cyan-400 animate-pulse' : 'bg-slate-600';
 		return `${baseClass} ${statusClass}`;
 	}
+
+	function getCriticalityColor(level: number): string {
+		switch (level) {
+			case 1:
+				return 'text-green-400';
+			case 2:
+				return 'text-yellow-400';
+			case 3:
+				return 'text-yellow-500';
+			case 4:
+				return 'text-orange-400';
+			case 5:
+				return 'text-red-400';
+			default:
+				return 'text-slate-400';
+		}
+	}
+
+	function getCriticalityBgColor(level: number): string {
+		switch (level) {
+			case 1:
+				return 'bg-green-500/20';
+			case 2:
+				return 'bg-yellow-500/20';
+			case 3:
+				return 'bg-yellow-600/20';
+			case 4:
+				return 'bg-orange-500/20';
+			case 5:
+				return 'bg-red-500/20';
+			default:
+				return 'bg-slate-700/20';
+		}
+	}
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
@@ -115,20 +155,23 @@
 		<!-- Table -->
 		<div class="bg-slate-800/30 backdrop-blur-md rounded-2xl border border-slate-700/50 overflow-hidden shadow-2xl">
 			<!-- Table Header -->
-			<div class="grid grid-cols-12 gap-4 px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
-				<div class="col-span-3 text-slate-400 text-sm font-semibold tracking-wider uppercase">
-					File Name
-				</div>
+            <div class="grid grid-cols-12 gap-4 px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
 				<div class="col-span-2 text-slate-400 text-sm font-semibold tracking-wider uppercase">
-					Date
-				</div>
-				<div class="col-span-6 text-slate-400 text-sm font-semibold tracking-wider uppercase">
-					Labels
-				</div>
-				<div class="col-span-1 text-slate-400 text-sm font-semibold tracking-wider uppercase">
-					Actions
-				</div>
-			</div>
+                    Criticality
+                </div>
+                <div class="col-span-3 text-slate-400 text-sm font-semibold tracking-wider uppercase">
+                    File Name
+                </div>
+                <div class="col-span-2 text-slate-400 text-sm font-semibold tracking-wider uppercase">
+                    Date
+                </div>
+                <div class="col-span-4 text-slate-400 text-sm font-semibold tracking-wider uppercase">
+                    Labels
+                </div>
+                <div class="col-span-1 text-slate-400 text-sm font-semibold tracking-wider uppercase">
+                    Actions
+                </div>
+            </div>
 
 			<!-- Table Body -->
 			<div class="divide-y divide-slate-700/30">
@@ -140,9 +183,17 @@
                         on:click={() => handleRowClick(file.id)}
                         style="animation: slideIn 0.5s ease-out {index * 0.1}s both"
                     >
+
+				 <!-- Criticality -->
+                           <div class="col-span-2 flex items-center">
+                            <div class={`px-3 py-2 rounded-lg ${getCriticalityBgColor(file.criticality)} flex items-center gap-2`}>
+                                <span class={`text-sm font-semibold ${getCriticalityColor(file.criticality)}`}>
+                                    {file.criticality}/5
+                                </span>
+                            </div>
+                        </div>
                         <!-- Filename -->
                         <div class="col-span-3 flex items-center gap-3">
-                            <div class={getIndicatorClass(file.id)}></div>
                             <span class="text-slate-200 font-medium">{file.filename}</span>
                         </div>
 
@@ -152,7 +203,7 @@
                         </div>
 
                         <!-- Labels -->
-                        <div class="col-span-6 flex flex-wrap gap-2 items-center">
+                        <div class="col-span-4 flex flex-wrap gap-2 items-center">
                             {#each file.labels as label, idx (idx)}
                                 <span
                                     class="px-3 py-1 bg-slate-700/50 text-cyan-300 text-sm rounded-full border border-slate-600/50 transition-all duration-300 hover:bg-slate-600/50 hover:scale-105"
@@ -162,7 +213,6 @@
                                 </span>
                             {/each}
                         </div>
-
                         <!-- Actions -->
                         <div class="col-span-1 flex items-center gap-2">
                             <button
