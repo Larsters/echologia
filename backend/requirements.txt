@@ -1,0 +1,9 @@
+numpy<2.0
+torch
+torchaudio
+pyannote-audio
+faster-whisper
+whisperx
+librosa
+transformers
+soundfile

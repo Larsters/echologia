@@ -1,0 +1,11 @@
+__pycache__/
+/venv
+/env
+.env
+/.env
+venv
+backend/venv/
+backend/.env
+!backend/whisper_shit/simple_personas_output.json
+test-audio.mp3
+backend/whisper_shit/test-audio.mp3
