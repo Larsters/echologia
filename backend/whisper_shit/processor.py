@@ -203,32 +203,3 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
             persona["speaker_id"] = main_spk
     
     return output
-
-def main():
-    """Test the simple processor"""
-    try:
-        result = process_audio_to_personas("test-audio.mp3")
-        
-        # Save to JSON
-        with open("simple_personas_output.json", "w") as f:
-            json.dump(result, f, indent=2)
-        
-        print("✅ Processing complete!")
-        print(f"📊 Session ID: {result['session_id']}")
-        print(f"⏱️  Duration: {result['meta']['duration_sec']} seconds")
-        print(f"👥 Found {len(result['personas'])} speakers")
-        print(f"📝 Generated {len(result['segments'])} segments")
-        print(f"💾 Output saved to: simple_personas_output.json")
-        
-        # Print personas summary
-        print("\n📋 Personas Summary:")
-        for persona in result['personas']:
-            print(f"  {persona['speaker_id']}: {persona['speaking_percent']}% speaking time")
-            
-    except Exception as e:
-        print(f"❌ Error: {e}")
-        import traceback
-        traceback.print_exc()
-
-if __name__ == "__main__":
-    main()

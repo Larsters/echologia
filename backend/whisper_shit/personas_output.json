@@ -1,0 +1,176 @@
+{
+  "session_id": "session_2025_10_25_143530",
+  "meta": {
+    "duration_sec": 34.1,
+    "sampling_rate": 16000,
+    "model_asr": "faster-whisper-large-v2",
+    "model_diarization": "pyannote/speaker-diarization-3.1",
+    "date_processed": "2025-10-25T14:35:30.044448Z"
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.0,
+      "speaker_id": "spk_01",
+      "text": "Hello there Alex, I hope you're having a great day. How do you enjoy this hackathon right now?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 5.0,
+      "end": 12.0,
+      "speaker_id": "spk_02",
+      "text": "It's very good event, I really enjoy and it's nice because we'll do it on a few days.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 12.0,
+      "end": 16.0,
+      "speaker_id": "spk_01",
+      "text": "Do you like any girls around here? What do you think?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 16.0,
+      "end": 21.0,
+      "speaker_id": "spk_01",
+      "text": "Any girls that you find attractive here on the hackathon?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 22.0,
+      "end": 26.0,
+      "speaker_id": "spk_02",
+      "text": "We have a sausage party here.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 26.0,
+      "end": 30.0,
+      "speaker_id": "spk_01",
+      "text": "It's pretty cold here and we're excited.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 30.0,
+      "end": 33.0,
+      "speaker_id": "spk_01",
+      "text": "Alex, are you last words?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    }
+  ],
+  "personas": [
+    {
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 18.09,
+      "speaking_percent": 56.3,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "unknown",
+        "confidence": 0.5
+      },
+      "age": {
+        "label": "unknown",
+        "mean_estimate": 30,
+        "confidence": 0.5
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      }
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 14.04,
+      "speaking_percent": 43.7,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "unknown",
+        "confidence": 0.5
+      },
+      "age": {
+        "label": "unknown",
+        "mean_estimate": 30,
+        "confidence": 0.5
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      }
+    }
+  ],
+  "hierarchy": [
+    {
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 18.09,
+      "speaking_percent": 56.3,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "unknown",
+        "confidence": 0.5
+      },
+      "age": {
+        "label": "unknown",
+        "mean_estimate": 30,
+        "confidence": 0.5
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      }
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 14.04,
+      "speaking_percent": 43.7,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "unknown",
+        "confidence": 0.5
+      },
+      "age": {
+        "label": "unknown",
+        "mean_estimate": 30,
+        "confidence": 0.5
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      }
+    }
+  ],
+  "global_emotion_trend": {
+    "neutral": 1.0
+  }
+}
