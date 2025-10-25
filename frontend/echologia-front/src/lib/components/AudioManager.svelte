@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Search, Play, Pause } from 'lucide-svelte';
+    import { goto } from '$app/navigation';	
 
 	interface AudioFile {
 		id: number;
@@ -63,9 +64,13 @@
 		updateFilteredFiles();
 	});
 
-	function handlePlay(id: number) {
-		playingId = playingId === id ? null : id;
-	}
+    function handlePlay(id: number) {
+        playingId = playingId === id ? null : id;
+    }
+
+    function handleRowClick(id: number) {
+        goto(`/player?fileId=${id}`);
+    }
 
 	function getRowClass(fileId: number): string {
 		const baseClass =
@@ -127,52 +132,53 @@
 
 			<!-- Table Body -->
 			<div class="divide-y divide-slate-700/30">
-				{#each filteredFiles as file, index (file.id)}
-					<div
-						class={getRowClass(file.id)}
-						onmouseenter={() => (hoveredRow = file.id)}
-						onmouseleave={() => (hoveredRow = null)}
-						style="animation: slideIn 0.5s ease-out {index * 0.1}s both"
-					>
-						<!-- Filename -->
-						<div class="col-span-3 flex items-center gap-3">
-							<div class={getIndicatorClass(file.id)}></div>
-							<span class="text-slate-200 font-medium">{file.filename}</span>
-						</div>
+                {#each filteredFiles as file, index (file.id)}
+                    <div
+                        class={getRowClass(file.id)}
+                        on:mouseenter={() => (hoveredRow = file.id)}
+                        on:mouseleave={() => (hoveredRow = null)}
+                        on:click={() => handleRowClick(file.id)}
+                        style="animation: slideIn 0.5s ease-out {index * 0.1}s both"
+                    >
+                        <!-- Filename -->
+                        <div class="col-span-3 flex items-center gap-3">
+                            <div class={getIndicatorClass(file.id)}></div>
+                            <span class="text-slate-200 font-medium">{file.filename}</span>
+                        </div>
 
-						<!-- Date -->
-						<div class="col-span-2 flex items-center text-slate-400">
-							{file.date}
-						</div>
+                        <!-- Date -->
+                        <div class="col-span-2 flex items-center text-slate-400">
+                            {file.date}
+                        </div>
 
-						<!-- Labels -->
-						<div class="col-span-6 flex flex-wrap gap-2 items-center">
-							{#each file.labels as label, idx (idx)}
-								<span
-									class="px-3 py-1 bg-slate-700/50 text-cyan-300 text-sm rounded-full border border-slate-600/50 transition-all duration-300 hover:bg-slate-600/50 hover:scale-105"
-									style="animation: fadeIn 0.5s ease-out {index * 0.1 + idx * 0.05}s both"
-								>
-									{label}
-								</span>
-							{/each}
-						</div>
+                        <!-- Labels -->
+                        <div class="col-span-6 flex flex-wrap gap-2 items-center">
+                            {#each file.labels as label, idx (idx)}
+                                <span
+                                    class="px-3 py-1 bg-slate-700/50 text-cyan-300 text-sm rounded-full border border-slate-600/50 transition-all duration-300 hover:bg-slate-600/50 hover:scale-105"
+                                    style="animation: fadeIn 0.5s ease-out {index * 0.1 + idx * 0.05}s both"
+                                >
+                                    {label}
+                                </span>
+                            {/each}
+                        </div>
 
-						<!-- Actions -->
-						<div class="col-span-1 flex items-center gap-2">
-							<button
-								onclick={() => handlePlay(file.id)}
-								class="p-2 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 transition-all duration-300 hover:scale-110"
-							>
-								{#if playingId === file.id}
-									<Pause class="w-4 h-4" />
-								{:else}
-									<Play class="w-4 h-4" />
-								{/if}
-							</button>
-						</div>
-					</div>
-				{/each}
-			</div>
+                        <!-- Actions -->
+                        <div class="col-span-1 flex items-center gap-2">
+                            <button
+                                on:click|stopPropagation={() => handlePlay(file.id)}
+                                class="p-2 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 transition-all duration-300 hover:scale-110"
+                            >
+                                {#if playingId === file.id}
+                                    <Pause class="w-4 h-4" />
+                                {:else}
+                                    <Play class="w-4 h-4" />
+                                {/if}
+                            </button>
+                        </div>
+                    </div>
+                {/each}
+            </div>
 		</div>
 
 		<!-- Stats Footer -->
