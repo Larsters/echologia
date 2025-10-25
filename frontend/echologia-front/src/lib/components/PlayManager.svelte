@@ -54,16 +54,15 @@
 				<!-- Commander Conversation -->
 				<div class="rounded-2xl border border-slate-700/50 bg-slate-800/30 p-6 backdrop-blur-md">
 					<h2 class="mb-6 text-xl font-semibold uppercase tracking-wide text-slate-200">
-						Commander Conversation
+						Commander Ccconversation
 					</h2>
 
 					<div class="space-y-6">
-						<!-- Personnel Cards -->
-						<div class="grid gap-4 md:grid-cols-2">
+						<!-- Personnel Cards - Stacked Vertically -->
+						<div class="space-y-4">
 							<!-- Mustermann -->
 							<div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
 								<img
-									src="/military-officer-portrait.png"
 									alt="Mustermann"
 									class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
 								/>
@@ -109,55 +108,55 @@
 									</div>
 								</div>
 							</div>
-						</div>
 
-						<!-- Audio Player -->
-						<div class="rounded-lg bg-slate-700/30 p-6">
-							<div class="mb-4 flex items-center justify-center">
-								<svg class="h-16 w-full" viewBox="0 0 800 64">
-									{#each Array.from({ length: 100 }) as _, i}
-										{@const height = Math.random() * 50 + 10}
-										<rect
-											x={i * 8}
-											y={32 - height / 2}
-											width="4"
-											height={height}
-											fill={i < 30 ? 'rgb(34, 211, 238)' : 'rgb(71, 85, 105)'}
-											opacity={i < 30 ? 1 : 0.5}
-										/>
+							<!-- Audio Player - Smaller -->
+							<div class="rounded-lg bg-slate-700/30 p-4">
+								<div class="mb-3 flex items-center justify-center">
+									<svg class="h-10 w-full" viewBox="0 0 800 64">
+										{#each Array.from({ length: 100 }) as _, i}
+											{@const height = Math.random() * 50 + 10}
+											<rect
+												x={i * 8}
+												y={32 - height / 2}
+												width="4"
+												height={height}
+												fill={i < 30 ? 'rgb(34, 211, 238)' : 'rgb(71, 85, 105)'}
+												opacity={i < 30 ? 1 : 0.5}
+											/>
+										{/each}
+									</svg>
+								</div>
+
+								<div class="flex items-center justify-center gap-3">
+									<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
+										<Play class="h-5 w-5" />
+									</button>
+									<button
+										onclick={togglePlaybackSpeed}
+										class="text-xs font-medium text-slate-200 hover:text-cyan-400 transition-colors"
+									>
+										{playbackSpeed}x
+									</button>
+									<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
+										<SkipForward class="h-5 w-5" />
+									</button>
+									<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
+										<Volume2 class="h-5 w-5" />
+									</button>
+								</div>
+							</div>
+
+							<!-- Transcription -->
+							<div class="rounded-lg bg-slate-700/30 p-4">
+								<div class="mb-3 text-sm font-medium text-slate-400">Transcription</div>
+								<div class="space-y-2 text-sm">
+									{#each transcription as item}
+										<div class="flex gap-3">
+											<span class="text-slate-500">{item.time}</span>
+											<span class="text-slate-200">{item.speaker}: {item.text}</span>
+										</div>
 									{/each}
-								</svg>
-							</div>
-
-							<div class="flex items-center justify-center gap-4">
-								<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-									<Play class="h-6 w-6" />
-								</button>
-								<button
-									onclick={togglePlaybackSpeed}
-									class="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
-								>
-									{playbackSpeed}x
-								</button>
-								<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-									<SkipForward class="h-6 w-6" />
-								</button>
-								<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-									<Volume2 class="h-6 w-6" />
-								</button>
-							</div>
-						</div>
-
-						<!-- Transcription -->
-						<div class="rounded-lg bg-slate-700/30 p-4">
-							<div class="mb-3 text-sm font-medium text-slate-400">Transcription</div>
-							<div class="space-y-2 text-sm">
-								{#each transcription as item}
-									<div class="flex gap-3">
-										<span class="text-slate-500">{item.time}</span>
-										<span class="text-slate-200">{item.speaker}: {item.text}</span>
-									</div>
-								{/each}
+								</div>
 							</div>
 						</div>
 					</div>
