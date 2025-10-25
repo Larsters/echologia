@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Search, Play, Pause } from 'lucide-svelte';
-    import { goto } from '$app/navigation';	
+	import { goto } from '$app/navigation';
+	import Header from './Header.svelte';
 
 	interface AudioFile {
 		id: number;
@@ -130,15 +131,7 @@
 	<div class="max-w-6xl mx-auto">
 		<!-- Header -->
 		<div class="mb-12 animate-fadeIn">
-			<div class="flex items-center gap-3 mb-8">
-				<div class="relative">
-					<div class="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center animate-pulse">
-						<div class="w-8 h-8 rounded-full border-4 border-white"></div>
-					</div>
-					<div class="absolute inset-0 w-12 h-12 rounded-full bg-cyan-400 animate-ping opacity-20"></div>
-				</div>
-				<h1 class="text-4xl font-bold text-white">Echologia</h1>
-			</div>
+			<Header />
 
 			<!-- Search Bar -->
 			<div class="relative group">
@@ -178,9 +171,9 @@
                 {#each filteredFiles as file, index (file.id)}
                     <div
                         class={getRowClass(file.id)}
-                        on:mouseenter={() => (hoveredRow = file.id)}
-                        on:mouseleave={() => (hoveredRow = null)}
-                        on:click={() => handleRowClick(file.id)}
+                        onmouseenter={() => (hoveredRow = file.id)}
+                        onmouseleave={() => (hoveredRow = null)}
+                        onclick={() => handleRowClick(file.id)}
                         style="animation: slideIn 0.5s ease-out {index * 0.1}s both"
                     >
 
@@ -216,7 +209,10 @@
                         <!-- Actions -->
                         <div class="col-span-1 flex items-center gap-2">
                             <button
-                                on:click|stopPropagation={() => handlePlay(file.id)}
+                                onclick={(e) => {
+                                    e.stopPropagation();
+                                    handlePlay(file.id);
+                                }}
                                 class="p-2 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 transition-all duration-300 hover:scale-110"
                             >
                                 {#if playingId === file.id}

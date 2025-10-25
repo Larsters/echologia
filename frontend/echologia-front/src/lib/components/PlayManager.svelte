@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Play, SkipForward, Volume2, BarChart3, User } from 'lucide-svelte';
+	import { Play, SkipForward, Volume2 } from 'lucide-svelte';
+	import Header from './Header.svelte';
 
 	let playbackSpeed = $state(1.5);
 
@@ -39,40 +40,14 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-	<!-- Header -->
-	<header class="border-b border-slate-700/50 bg-slate-800/30">
-		<div class="container mx-auto flex items-center justify-between px-6 py-4 lg:px-8">
-			<div class="flex items-center gap-3">
-				<div class="relative">
-					<div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-cyan-400">
-						<div class="h-6 w-6 rounded-full border-2 border-cyan-400"></div>
-					</div>
-				</div>
-				<h1 class="text-2xl font-bold text-cyan-400">Echologia</h1>
-			</div>
-
-			<div class="flex items-center gap-6 text-sm text-slate-400">
-				<div class="flex items-center gap-4">
-					<span>
-						Session ID: <span class="text-slate-200">4854</span>
-					</span>
-					<span>16:25</span>
-					<span>21 MAY 2023 (UTC)</span>
-				</div>
-				<div class="flex items-center gap-3">
-					<button class="text-red-400 hover:text-red-300">
-						<BarChart3 class="h-5 w-5" />
-					</button>
-					<button class="text-cyan-400 hover:text-cyan-300">
-						<User class="h-5 w-5" />
-					</button>
-				</div>
-			</div>
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
+	<div class="max-w-7xl mx-auto">
+		<!-- Header -->
+		<div class="mb-8">
+			<Header />
 		</div>
-	</header>
 
-	<main class="container mx-auto p-6 lg:p-8">
+		<main>
 		<div class="grid gap-6 lg:grid-cols-[1fr_400px]">
 			<!-- Left Column -->
 			<div class="space-y-6">
@@ -159,7 +134,7 @@
 									<Play class="h-6 w-6" />
 								</button>
 								<button
-									on:click={togglePlaybackSpeed}
+									onclick={togglePlaybackSpeed}
 									class="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
 								>
 									{playbackSpeed}x
