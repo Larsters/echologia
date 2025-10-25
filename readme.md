@@ -8,4 +8,4 @@
 - Open a pull request for review
 
 ## What is where
-- 'resources/': Contains all the assets and resources used as references for the project
+- 'resources/': Contains all the assets and resources used as references for the project; reference
