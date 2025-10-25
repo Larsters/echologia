@@ -10,6 +10,7 @@ import os
 from huggingface_hub import login
 from pyannote.audio import Pipeline as PyannotePipeline
 from dotenv import load_dotenv
+from llm_populate_entries import extract_speaker_names_with_llm
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
@@ -40,6 +41,7 @@ def transcribe_audio_simple(audio_file="test-audio.mp3"):
 def diarize_with_pyannote(audio_file: str, num_speakers: int | None = None):
     """
     Robust speaker diarization using pyannote/speaker-diarization-3.1.
+    Preloads audio to avoid tensor size mismatches.
     Returns a list of dicts: {"start": float, "end": float, "speaker_id": "SPEAKER_00X"}.
     """
     hf_token = os.environ.get("HUGGINGFACE_TOKEN") or os.environ.get("HF_TOKEN")
@@ -51,8 +53,14 @@ def diarize_with_pyannote(audio_file: str, num_speakers: int | None = None):
     pipeline = PyannotePipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1"
     )
-    # Let it infer num speakers unless explicitly provided
-    diarization = pipeline(audio_file, num_speakers=2)
+    
+    # NEW: Preload audio to avoid PyAnnote's internal loading issues
+    print("🎵 Loading audio for diarization...")
+    waveform, sample_rate = librosa.load(audio_file, sr=16000, mono=True)
+    waveform = torch.from_numpy(waveform).unsqueeze(0)  # Shape: [1, samples]
+    
+    # Pass preloaded waveform instead of file path
+    diarization = pipeline({"waveform": waveform, "sample_rate": sample_rate}, num_speakers=2)
 
     # Build normalized segments with consistent spk labels
     raw = []
@@ -116,7 +124,7 @@ def speaking_time_fair(diar_segments: list[dict]) -> dict:
             talk[spk] = talk.get(spk, 0.0) + share
     return {k: float(v) for k, v in talk.items()}
 
-def process_audio_to_personas(audio_file="test-audio.mp3"):
+def process_audio_to_personas(audio_file="test-audio2.mp3"):
     """
     Complete pipeline: transcribe -> extract personas -> output JSON
     """
@@ -179,7 +187,7 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
     # Sort segments by start time
     processed_segments.sort(key=lambda x: x["start"])
     
-    # 8. Create output
+    # 8. Create output (before this was step 8)
     output = {
         "session_id": f"session_{datetime.now().strftime('%Y_%m_%d_%H%M%S')}",
         "meta": {
@@ -195,10 +203,18 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
         "global_emotion_trend": {"neutral": 1.0}  
     }
     
-    # Assign short speakers to the main speaker
+    # NEW: Use LLM to extract speaker names
+    print("\n🤖 Using LLM to extract speaker names...")
+    output["personas"] = extract_speaker_names_with_llm(processed_segments, output["personas"])
+    
+    # Update hierarchy with names too
+    output["hierarchy"] = sorted(output["personas"], key=lambda x: x["speaking_time_sec"], reverse=True)
+    
+    # Assign short speakers to the main speaker (after name extraction)
     MIN_SPEECH = 3.0  # seconds
+    talk_times = {p["speaker_id"]: p["speaking_time_sec"] for p in output["personas"]}
     main_spk = max(talk_times, key=talk_times.get)
-    for persona in personas:
+    for persona in output["personas"]:
         if persona["speaking_time_sec"] < MIN_SPEECH:
             persona["speaker_id"] = main_spk
     

@@ -19,7 +19,7 @@ def main():
     print("=" * 50)
 
     # Default audio file
-    audio_file = "test-audio.mp3"
+    audio_file = "test-audio2.mp3"
 
     # Check if audio file exists
     if not os.path.exists(audio_file):

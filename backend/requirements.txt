@@ -7,3 +7,4 @@ whisperx
 librosa
 transformers
 soundfile
+openai
