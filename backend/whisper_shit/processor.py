@@ -4,12 +4,13 @@ import librosa
 import numpy as np
 from collections import defaultdict, Counter
 from datetime import datetime
-import hashlib
 from faster_whisper import WhisperModel
 import os
 from huggingface_hub import login
 from pyannote.audio import Pipeline as PyannotePipeline
 from dotenv import load_dotenv
+from llm_populate_entries import extract_speaker_names_with_llm
+from age_gender_estimation import estimate_age_gender_for_personas
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
@@ -40,6 +41,7 @@ def transcribe_audio_simple(audio_file="test-audio.mp3"):
 def diarize_with_pyannote(audio_file: str, num_speakers: int | None = None):
     """
     Robust speaker diarization using pyannote/speaker-diarization-3.1.
+    Preloads audio to avoid tensor size mismatches.
     Returns a list of dicts: {"start": float, "end": float, "speaker_id": "SPEAKER_00X"}.
     """
     hf_token = os.environ.get("HUGGINGFACE_TOKEN") or os.environ.get("HF_TOKEN")
@@ -51,8 +53,14 @@ def diarize_with_pyannote(audio_file: str, num_speakers: int | None = None):
     pipeline = PyannotePipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1"
     )
-    # Let it infer num speakers unless explicitly provided
-    diarization = pipeline(audio_file, num_speakers=2)
+    
+    # Preload audio to avoid PyAnnote's internal loading issues
+    print("🎵 Loading audio for diarization...")
+    waveform, sample_rate = librosa.load(audio_file, sr=16000, mono=True)
+    waveform = torch.from_numpy(waveform).unsqueeze(0)  # Shape: [1, samples]
+    
+    # Pass preloaded waveform instead of file path
+    diarization = pipeline({"waveform": waveform, "sample_rate": sample_rate}, num_speakers=2)
 
     # Build normalized segments with consistent spk labels
     raw = []
@@ -63,7 +71,7 @@ def diarize_with_pyannote(audio_file: str, num_speakers: int | None = None):
             "speaker_id": speaker
         })
 
-    # Map pyannote labels (e.g., "SPEAKER_00", "SPEAKER_01") deterministically to spk_01... by first occurrence
+    # Map pyannote labels to spk_01, spk_02, etc.
     spk_order = []
     label_map = {}
     norm = []
@@ -102,7 +110,9 @@ def speaking_time_fair(diar_segments: list[dict]) -> dict:
     """
     if not diar_segments:
         return {}
-    change_points = sorted({s["start"] for s in diar_segments} | {s["end"] for s in diar_segments})
+    change_points = sorted(
+        {s["start"] for s in diar_segments} | {s["end"] for s in diar_segments}
+    )
     talk = {}
     for i in range(len(change_points) - 1):
         a, b = change_points[i], change_points[i + 1]
@@ -118,29 +128,29 @@ def speaking_time_fair(diar_segments: list[dict]) -> dict:
 
 def process_audio_to_personas(audio_file="test-audio.mp3"):
     """
-    Complete pipeline: transcribe -> extract personas -> output JSON
+    Complete pipeline: transcribe -> diarize -> extract personas -> output JSON
     """
-    print("🚀 Starting simple audio processing pipeline...")
+    print("🚀 Starting audio processing pipeline...")
     
     # 1. Transcribe
     segments, info = transcribe_audio_simple(audio_file)
     
-    # 2. Load audio to get duration
+    # 2. Load audio at 16kHz (required for age/gender model)
     try:
-        audio, sr = librosa.load(audio_file, sr=None)
+        audio, sr = librosa.load(audio_file, sr=16000)
         total_duration = len(audio) / sr
         print(f"📊 Audio duration: {total_duration:.1f} seconds")
     except Exception as e:
         print(f"⚠️  Could not load audio for duration: {e}")
         total_duration = segments[-1]["end"] if segments else 0
     
-    # 3. Diarize with pyannote (robust)
+    # 3. Diarize with pyannote
     diar_segments = diarize_with_pyannote(audio_file)
 
     # 4. Assign speakers to ASR segments by max-overlap
     asr_with_spk = assign_speakers_by_overlap(segments, diar_segments)
 
-    # 5. Compute fair speaking times from diarization (handles overlaps)
+    # 5. Compute fair speaking times from diarization
     talk_times = speaking_time_fair(diar_segments)
 
     # 6. Aggregate per-speaker stats
@@ -160,11 +170,18 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
             "speaking_percent": round(100.0 * t / total_talk, 2),
             "languages": languages or {info.language: 1.0},
             "sex": {"label": "unknown", "confidence": 0.5},
-            "age": {"label": "unknown", "mean_estimate": 30, "confidence": 0.5},
+            "age": {"label": "unknown", "mean_estimate": 30, "confidence": 0.5},  
             "mood_summary": {"dominant": "neutral"}
         })
 
-    # 7. Create final segments with speaker assignment (for timeline)
+    # 7. Estimate age and gender for each persona
+    try:
+        personas = estimate_age_gender_for_personas(audio, sr, diar_segments, personas)
+        print("✅ Age and gender estimation completed")
+    except Exception as e:
+        print(f"⚠️ Age and gender estimation failed: {e}")
+
+    # 8. Create final segments with speaker assignment
     processed_segments = []
     for seg in asr_with_spk:
         processed_segments.append({
@@ -176,17 +193,17 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
             "emotion": {"label": "neutral", "confidence": 0.8}
         })
     
-    # Sort segments by start time
     processed_segments.sort(key=lambda x: x["start"])
     
-    # 8. Create output
+    # 9. Create output structure
     output = {
         "session_id": f"session_{datetime.now().strftime('%Y_%m_%d_%H%M%S')}",
         "meta": {
             "duration_sec": round(total_duration, 1),
             "sampling_rate": 16000,
-            "model_asr": "faster-whisper-large-v2",
+            "model_asr": "faster-whisper-base",
             "model_diarization": "pyannote/speaker-diarization-3.1",
+            "model_age_gender": "audeering/wav2vec2-large-robust-24-ft-age-gender",
             "date_processed": datetime.now().isoformat() + "Z"
         },
         "segments": processed_segments,
@@ -195,11 +212,9 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
         "global_emotion_trend": {"neutral": 1.0}  
     }
     
-    # Assign short speakers to the main speaker
-    MIN_SPEECH = 3.0  # seconds
-    main_spk = max(talk_times, key=talk_times.get)
-    for persona in personas:
-        if persona["speaking_time_sec"] < MIN_SPEECH:
-            persona["speaker_id"] = main_spk
+    # 10. Use LLM to extract speaker names
+    print("\n🤖 Using LLM to extract speaker names...")
+    output["personas"] = extract_speaker_names_with_llm(processed_segments, output["personas"])
+    output["hierarchy"] = sorted(output["personas"], key=lambda x: x["speaking_time_sec"], reverse=True)
     
     return output
