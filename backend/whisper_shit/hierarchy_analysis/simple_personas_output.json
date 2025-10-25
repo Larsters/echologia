@@ -1,0 +1,26 @@
+{
+  "hierarchy_analysis": [
+    {
+      "speaker_id": "spk_01",
+      "rank": "highest rank",
+      "confidence_percent": 85,
+      "reasoning": "Speaker 01 demonstrates authority by issuing commands and expressing concerns about team performance, indicating a leadership role."
+    },
+    {
+      "speaker_id": "spk_02",
+      "rank": "second highest rank",
+      "confidence_percent": 82,
+      "reasoning": "Speaker 02 responds to Speaker 01's commands and acknowledges mistakes, suggesting a subordinate position while also showing initiative."
+    }
+  ],
+  "overall_confidence": 83.5,
+  "key_indicators": [
+    "Speaker 01 uses commanding language and expresses authority.",
+    "Speaker 02 responds defensively, indicating a subordinate role.",
+    "Speaker 01 has a longer speaking time, suggesting a leadership position."
+  ],
+  "uncertainties": [
+    "Lack of explicit military titles or roles in the conversation.",
+    "Ambiguity in Speaker 02's rank due to their assertiveness."
+  ]
+}
