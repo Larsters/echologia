@@ -1,0 +1,55 @@
+{
+  "session_id": "meeting_2025_10_25_01",
+  "meta": {
+    "duration_sec": 3620.5,
+    "sampling_rate": 16000,
+    "model_asr": "whisperx-large-v2",
+    "model_diarization": "pyannote/speaker-diarization-3.0",
+    "model_age": "codelion/whisper-age-estimator",
+    "model_emotion": "superb/wav2vec2-base-superb-er",
+    "date_processed": "2025-10-25T11:20:00Z"
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 6.42,
+      "speaker_id": "spk_01",
+      "text": "Hello, everyone, welcome to the meeting.",
+      "words": [
+        {"word": "Hello,", "start": 0.0, "end": 0.58, "confidence": 0.97},
+        {"word": "everyone,", "start": 0.58, "end": 1.12, "confidence": 0.94}
+      ],
+      "language": "en",
+      "emotion": {"label": "neutral", "confidence": 0.83}
+    }
+  ],
+  "personas": [
+    {
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 1720.3,
+      "speaking_percent": 49.2,
+      "overlap_ratio": 0.12,
+      "languages": {"en": 0.9, "de": 0.1},
+      "sex": {"label": "male", "confidence": 0.91},
+      "age": {"label": "30-44", "mean_estimate": 36, "confidence": 0.72},
+      "mood_summary": {"dominant": "neutral", "variation": ["positive", "calm"]},
+      "embedding_vector": "sha256:abcdef..."  
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 1210.7,
+      "speaking_percent": 34.7,
+      "overlap_ratio": 0.08,
+      "languages": {"en": 0.85, "fr": 0.15},
+      "sex": {"label": "female", "confidence": 0.89},
+      "age": {"label": "18-29", "mean_estimate": 24, "confidence": 0.65},
+      "mood_summary": {"dominant": "positive"}
+    }
+  ],
+  "hierarchy": ["spk_01", "spk_02", "spk_03"],
+  "global_emotion_trend": {
+    "neutral": 0.6,
+    "positive": 0.3,
+    "negative": 0.1
+  }
+}
