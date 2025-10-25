@@ -1,40 +1,19 @@
 {
-  "session_id": "session_2025_10_25_153013",
+  "session_id": "session_2025_10_25_165314",
   "meta": {
-    "duration_sec": 108.1,
+    "duration_sec": 34.1,
     "sampling_rate": 16000,
-    "model_asr": "faster-whisper-large-v2",
+    "model_asr": "faster-whisper-base",
     "model_diarization": "pyannote/speaker-diarization-3.1",
-    "date_processed": "2025-10-25T15:30:13.625021Z"
+    "model_age_gender": "audeering/wav2vec2-large-robust-24-ft-age-gender",
+    "date_processed": "2025-10-25T16:53:14.164230Z"
   },
   "segments": [
     {
       "start": 0.0,
-      "end": 9.0,
-      "speaker_id": "spk_02",
-      "text": "I just need to understand why Jordan, we had one chance to secure that partnership and you went off the script in the presentation.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 9.0,
-      "end": 11.0,
-      "speaker_id": "spk_02",
-      "text": "Why would you risk that?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 11.0,
-      "end": 18.0,
+      "end": 5.0,
       "speaker_id": "spk_01",
-      "text": "Because the strip wasn't working Alex and they were losing interest I saw it in the faces.",
+      "text": "Hello there Alex, I hope you're having a great day. How do you enjoy this hackathon right now?",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -42,10 +21,43 @@
       }
     },
     {
-      "start": 18.0,
-      "end": 25.0,
+      "start": 5.0,
+      "end": 12.0,
+      "speaker_id": "spk_02",
+      "text": "It's very good event, I really enjoy and it's nice because we'll do it on a few days.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 12.0,
+      "end": 16.0,
       "speaker_id": "spk_01",
-      "text": "I saw it in a show that it was really flexible. It might win them over.",
+      "text": "Do you like any girls around here? What do you think?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 16.0,
+      "end": 21.0,
+      "speaker_id": "spk_01",
+      "text": "Any girls that you find attractive here on the hackathon?",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 22.0,
+      "end": 26.0,
+      "speaker_id": "spk_01",
+      "text": "We have a sausage party here.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -55,8 +67,8 @@
     {
       "start": 26.0,
       "end": 30.0,
-      "speaker_id": "spk_02",
-      "text": "And instead it made us look unprepared.",
+      "speaker_id": "spk_01",
+      "text": "It's pretty cold here and we're excited.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -65,251 +77,9 @@
     },
     {
       "start": 30.0,
-      "end": 34.0,
+      "end": 33.0,
       "speaker_id": "spk_02",
-      "text": "The board thinks we can't follow through on our own plans.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 34.0,
-      "end": 37.0,
-      "speaker_id": "spk_02",
-      "text": "Do you realize how that reflects on all of us?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 37.0,
-      "end": 40.0,
-      "speaker_id": "spk_01",
-      "text": "Do you mean how it reflects on you?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 40.0,
-      "end": 43.0,
-      "speaker_id": "spk_01",
-      "text": "Let's not pretend this is about the team.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 43.0,
-      "end": 45.0,
-      "speaker_id": "spk_01",
-      "text": "You care about how the board sees you.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 45.0,
-      "end": 47.0,
-      "speaker_id": "spk_02",
-      "text": "That's not fair, okay?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 47.0,
-      "end": 49.0,
-      "speaker_id": "spk_02",
-      "text": "Everything I do is to keep this team standing.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 49.0,
-      "end": 53.0,
-      "speaker_id": "spk_02",
-      "text": "When you go rogue like that, it tears apart the trust.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 56.0,
-      "end": 58.0,
-      "speaker_id": "spk_02",
-      "text": "Sometimes save it.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 62.0,
-      "end": 65.0,
-      "speaker_id": "spk_01",
-      "text": "I wasn't trying to betray you Alex.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 65.0,
-      "end": 68.0,
-      "speaker_id": "spk_01",
-      "text": "I just wanted it to work.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 68.0,
-      "end": 73.0,
-      "speaker_id": "spk_01",
-      "text": "I thought taking a risk might save us.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 73.0,
-      "end": 77.0,
-      "speaker_id": "spk_02",
-      "text": "Okay, sometimes saving us means trusting the plan.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 77.0,
-      "end": 79.0,
-      "speaker_id": "spk_02",
-      "text": "Even if it feels wrong.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 79.0,
-      "end": 84.0,
-      "speaker_id": "spk_02",
-      "text": "You're talented but if we can't move in the same direction, this is not going to work.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 85.0,
-      "end": 87.0,
-      "speaker_id": "spk_02",
-      "text": "I know, I messed up.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 87.0,
-      "end": 90.0,
-      "speaker_id": "spk_02",
-      "text": "I want to prove myself, not make you doubt it.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 90.0,
-      "end": 92.0,
-      "speaker_id": "spk_02",
-      "text": "Okay, nowhere is.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 92.0,
-      "end": 95.0,
-      "speaker_id": "spk_02",
-      "text": "I don't doubt your potential, okay?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 95.0,
-      "end": 100.0,
-      "speaker_id": "spk_02",
-      "text": "But next time, I need your trust more than in pure improvisation.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 100.0,
-      "end": 103.0,
-      "speaker_id": "spk_02",
-      "text": "Can we start there?",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 103.0,
-      "end": 105.0,
-      "speaker_id": "spk_02",
-      "text": "Here we can. I'm sorry Alex.",
-      "language": "en",
-      "emotion": {
-        "label": "neutral",
-        "confidence": 0.8
-      }
-    },
-    {
-      "start": 105.0,
-      "end": 108.0,
-      "speaker_id": "spk_02",
-      "text": "It's okay, we can fix it together.",
+      "text": "Alex, are you last words?",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -319,90 +89,90 @@
   ],
   "personas": [
     {
-      "speaker_id": "spk_02",
-      "speaking_time_sec": 49.93,
-      "speaking_percent": 63.38,
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 16.03,
+      "speaking_percent": 54.32,
       "languages": {
         "en": 1.0
       },
       "sex": {
-        "label": "unknown",
-        "confidence": 0.5
+        "label": "male",
+        "confidence": 0.995
       },
       "age": {
-        "label": "unknown",
-        "mean_estimate": 30,
-        "confidence": 0.5
+        "label": "Teenager",
+        "mean_estimate": 25,
+        "confidence": 0.8
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      },
+      "name": "Unknown"
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 13.48,
+      "speaking_percent": 45.68,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "male",
+        "confidence": 0.996
+      },
+      "age": {
+        "label": "Teenager",
+        "mean_estimate": 25,
+        "confidence": 0.8
       },
       "mood_summary": {
         "dominant": "neutral"
       },
       "name": "Alex"
-    },
-    {
-      "speaker_id": "spk_01",
-      "speaking_time_sec": 28.86,
-      "speaking_percent": 36.62,
-      "languages": {
-        "en": 1.0
-      },
-      "sex": {
-        "label": "unknown",
-        "confidence": 0.5
-      },
-      "age": {
-        "label": "unknown",
-        "mean_estimate": 30,
-        "confidence": 0.5
-      },
-      "mood_summary": {
-        "dominant": "neutral"
-      },
-      "name": "Jordan"
     }
   ],
   "hierarchy": [
     {
-      "speaker_id": "spk_02",
-      "speaking_time_sec": 49.93,
-      "speaking_percent": 63.38,
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 16.03,
+      "speaking_percent": 54.32,
       "languages": {
         "en": 1.0
       },
       "sex": {
-        "label": "unknown",
-        "confidence": 0.5
+        "label": "male",
+        "confidence": 0.995
       },
       "age": {
-        "label": "unknown",
-        "mean_estimate": 30,
-        "confidence": 0.5
+        "label": "Teenager",
+        "mean_estimate": 25,
+        "confidence": 0.8
+      },
+      "mood_summary": {
+        "dominant": "neutral"
+      },
+      "name": "Unknown"
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 13.48,
+      "speaking_percent": 45.68,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "male",
+        "confidence": 0.996
+      },
+      "age": {
+        "label": "Teenager",
+        "mean_estimate": 25,
+        "confidence": 0.8
       },
       "mood_summary": {
         "dominant": "neutral"
       },
       "name": "Alex"
-    },
-    {
-      "speaker_id": "spk_01",
-      "speaking_time_sec": 28.86,
-      "speaking_percent": 36.62,
-      "languages": {
-        "en": 1.0
-      },
-      "sex": {
-        "label": "unknown",
-        "confidence": 0.5
-      },
-      "age": {
-        "label": "unknown",
-        "mean_estimate": 30,
-        "confidence": 0.5
-      },
-      "mood_summary": {
-        "dominant": "neutral"
-      },
-      "name": "Jordan"
     }
   ],
   "global_emotion_trend": {

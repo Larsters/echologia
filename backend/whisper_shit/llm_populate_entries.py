@@ -33,10 +33,9 @@ Example output: {{"spk_01": "John", "spk_02": "Alex"}}
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",  # Use a real model
+            model="gpt-4o-mini", 
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
-            temperature=0.1
+            max_completion_tokens=200
         )
         
         # Parse the response
