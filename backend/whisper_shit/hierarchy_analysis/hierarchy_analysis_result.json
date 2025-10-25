@@ -1,0 +1,27 @@
+{
+  "hierarchy_analysis": [
+    {
+      "speaker_id": "spk_01",
+      "rank": "Unknown",
+      "confidence_percent": 70,
+      "reasoning": "Speaker 01 has the highest speaking time and percentage, indicating a position of authority. However, the language used in the provided segment is neutral and does not include explicit commands or decision-making language typical of a high-ranking officer. The age range and mood do not provide definitive evidence of military rank."
+    },
+    {
+      "speaker_id": "spk_02",
+      "rank": "Unknown",
+      "confidence_percent": 60,
+      "reasoning": "Speaker 02 has a significant speaking time and a positive mood, suggesting a supportive or subordinate role. The age range is younger, which might indicate a lower rank, but without explicit deference patterns or command language, a specific military rank cannot be confidently assigned."
+    }
+  ],
+  "overall_confidence": 65,
+  "key_indicators": [
+    "Speaking time and percentage",
+    "Neutral and positive mood",
+    "Age demographics"
+  ],
+  "uncertainties": [
+    "Lack of explicit command language",
+    "Absence of clear deference patterns",
+    "Limited context on decision-making authority"
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "session_id": "session_2025_10_25_alex_jordan",
+  "meta": {
+    "duration_sec": 180.5,
+    "sampling_rate": 16000,
+    "model_asr": "faster-whisper-large-v2",
+    "model_diarization": "pyannote/speaker-diarization-3.1",
+    "date_processed": "2025-10-25T14:27:03.086327Z"
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 12.0,
+      "speaker_id": "spk_01",
+      "text": "I just need to understand why, Jordan. We had one chance to secure that partnership, and you went off-script in the presentation. Why would you risk that?",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.85
+      }
+    },
+    {
+      "start": 13.0,
+      "end": 24.0,
+      "speaker_id": "spk_02",
+      "text": "Because the script wasn't working, Alex! They were losing interest — I saw it in their faces. I thought if I showed them we were flexible, it might win them over.",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.82
+      }
+    },
+    {
+      "start": 25.0,
+      "end": 37.0,
+      "speaker_id": "spk_01",
+      "text": "And instead, it made us look unprepared. The board thinks we can't follow through on our own plans. Do you realize how that reflects on all of us?",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.88
+      }
+    },
+    {
+      "start": 38.0,
+      "end": 48.0,
+      "speaker_id": "spk_02",
+      "text": "You mean how it reflects on you. Let's not pretend this is about the team. You care about how the board sees you.",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.91
+      }
+    },
+    {
+      "start": 49.0,
+      "end": 61.0,
+      "speaker_id": "spk_01",
+      "text": "That's not fair. Everything I do is to keep this team standing. When you go rogue like that, it tears apart the trust we've built.",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.87
+      }
+    },
+    {
+      "start": 63.0,
+      "end": 72.0,
+      "speaker_id": "spk_02",
+      "text": "I wasn't trying to betray you, Alex. I just... wanted it to work. I thought taking a risk might save us.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.76
+      }
+    },
+    {
+      "start": 74.0,
+      "end": 90.0,
+      "speaker_id": "spk_01",
+      "text": "Sometimes saving us means trusting the plan — even when it feels wrong in the moment. You're talented, Jordan, but if we can't move in the same direction, we're never going to get anywhere.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.72
+      }
+    },
+    {
+      "start": 92.0,
+      "end": 100.0,
+      "speaker_id": "spk_02",
+      "text": "I know. I messed up. I wanted to prove myself — not make you doubt me.",
+      "language": "en",
+      "emotion": {
+        "label": "negative",
+        "confidence": 0.79
+      }
+    },
+    {
+      "start": 102.0,
+      "end": 116.0,
+      "speaker_id": "spk_01",
+      "text": "I don't doubt your potential. But next time, I need your trust more than your improvisation. Can we start there?",
+      "language": "en",
+      "emotion": {
+        "label": "positive",
+        "confidence": 0.68
+      }
+    },
+    {
+      "start": 118.0,
+      "end": 123.0,
+      "speaker_id": "spk_02",
+      "text": "Yeah... we can. I'm sorry, Alex.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.74
+      }
+    },
+    {
+      "start": 125.0,
+      "end": 132.0,
+      "speaker_id": "spk_01",
+      "text": "We'll fix it. Together — next time, by the book.",
+      "language": "en",
+      "emotion": {
+        "label": "positive",
+        "confidence": 0.71
+      }
+    }
+  ],
+  "personas": [
+    {
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 95.3,
+      "speaking_percent": 52.8,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "male",
+        "confidence": 0.78
+      },
+      "age": {
+        "label": "30-44",
+        "mean_estimate": 37,
+        "confidence": 0.68
+      },
+      "mood_summary": {
+        "dominant": "negative",
+        "variation": ["neutral", "positive"]
+      }
+    },
+    {
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 85.2,
+      "speaking_percent": 47.2,
+      "languages": {
+        "en": 1.0
+      },
+      "sex": {
+        "label": "unknown",
+        "confidence": 0.55
+      },
+      "age": {
+        "label": "25-35",
+        "mean_estimate": 29,
+        "confidence": 0.62
+      },
+      "mood_summary": {
+        "dominant": "negative",
+        "variation": ["neutral"]
+      }
+    }
+  ],
+  "hierarchy": [
+    "spk_01",
+    "spk_02"
+  ],
+  "global_emotion_trend": {
+    "negative": 0.65,
+    "neutral": 0.25,
+    "positive": 0.10
+  }
+}
