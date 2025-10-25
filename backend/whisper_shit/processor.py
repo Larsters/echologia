@@ -11,6 +11,7 @@ from pyannote.audio import Pipeline as PyannotePipeline
 from dotenv import load_dotenv
 from llm_populate_entries import extract_speaker_names_with_llm
 from age_gender_estimation import estimate_age_gender_for_personas
+from background_noise_classifier import get_session_background_summary
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
@@ -181,7 +182,17 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
     except Exception as e:
         print(f"⚠️ Age and gender estimation failed: {e}")
 
-    # 8. Create final segments with speaker assignment
+    # 8. Classify background audio
+    background_audio = {}
+    try:
+        print("🎵 Analyzing background audio...")
+        background_audio = get_session_background_summary(audio, sr, max_audio_length_sec=30, top_k=5)
+        print("✅ Background audio classification completed")
+    except Exception as e:
+        print(f"⚠️ Background audio classification failed: {e}")
+        background_audio = {"dominant_classes": []}
+
+    # 9. Create final segments with speaker assignment
     processed_segments = []
     for seg in asr_with_spk:
         processed_segments.append({
@@ -192,10 +203,10 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
             "language": info.language,
             "emotion": {"label": "neutral", "confidence": 0.8}
         })
-    
+
     processed_segments.sort(key=lambda x: x["start"])
-    
-    # 9. Create output structure
+
+    # 10. Create output structure
     output = {
         "session_id": f"session_{datetime.now().strftime('%Y_%m_%d_%H%M%S')}",
         "meta": {
@@ -204,17 +215,19 @@ def process_audio_to_personas(audio_file="test-audio.mp3"):
             "model_asr": "faster-whisper-base",
             "model_diarization": "pyannote/speaker-diarization-3.1",
             "model_age_gender": "audeering/wav2vec2-large-robust-24-ft-age-gender",
+            "model_background_classification": "MIT/ast-finetuned-audioset-10-10-0.4593",
             "date_processed": datetime.now().isoformat() + "Z"
         },
         "segments": processed_segments,
         "personas": personas,
         "hierarchy": sorted(personas, key=lambda x: x["speaking_time_sec"], reverse=True),
-        "global_emotion_trend": {"neutral": 1.0}  
+        "background_audio": background_audio,
+        "global_emotion_trend": {"neutral": 1.0}
     }
     
-    # 10. Use LLM to extract speaker names
+    # 11. Use LLM to extract speaker names
     print("\n🤖 Using LLM to extract speaker names...")
     output["personas"] = extract_speaker_names_with_llm(processed_segments, output["personas"])
     output["hierarchy"] = sorted(output["personas"], key=lambda x: x["speaking_time_sec"], reverse=True)
-    
+
     return output
