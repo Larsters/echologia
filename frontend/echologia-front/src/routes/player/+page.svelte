@@ -1,9 +1,14 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import { Play, SkipForward, Volume2 } from 'lucide-svelte';
+    import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from 'lucide-svelte';
     import Header from '$lib/components/Header.svelte';
 
     let playbackSpeed = $state(1.5);
+    let isPlaying = $state(false);
+    let isMuted = $state(false);
+    let currentTime = $state(0);
+    let duration = $state(0);
+    let audioElement: HTMLAudioElement;
 
     const relatedRecordings = [
         {
@@ -37,7 +42,70 @@
 
     function togglePlaybackSpeed() {
         playbackSpeed = playbackSpeed === 1.5 ? 1 : 1.5;
+        if (audioElement) {
+            audioElement.playbackRate = playbackSpeed;
+        }
     }
+
+    function togglePlay() {
+        if (!audioElement) return;
+        
+        if (isPlaying) {
+            audioElement.pause();
+        } else {
+            audioElement.play();
+        }
+        isPlaying = !isPlaying;
+    }
+
+    function toggleMute() {
+        if (!audioElement) return;
+        audioElement.muted = !isMuted;
+        isMuted = !isMuted;
+    }
+
+    function skipForward() {
+        if (!audioElement) return;
+        audioElement.currentTime = Math.min(audioElement.currentTime + 10, duration);
+    }
+
+    function skipBackward() {
+        if (!audioElement) return;
+        audioElement.currentTime = Math.max(audioElement.currentTime - 10, 0);
+    }
+
+    function handleTimeUpdate() {
+        if (!audioElement) return;
+        currentTime = audioElement.currentTime;
+    }
+
+    function handleLoadedMetadata() {
+        if (!audioElement) return;
+        duration = audioElement.duration;
+        audioElement.playbackRate = playbackSpeed;
+    }
+
+    function handleSeek(event: MouseEvent) {
+        if (!audioElement) return;
+        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const percentage = x / rect.width;
+        audioElement.currentTime = percentage * duration;
+    }
+
+    function formatTime(seconds: number): string {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    $effect(() => {
+        return () => {
+            if (audioElement) {
+                audioElement.pause();
+            }
+        };
+    });
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
@@ -91,37 +159,96 @@
 
                                 <!-- Audio Player -->
                                 <div class="rounded-lg bg-slate-700/30 p-4">
-                                    <div class="mb-3 flex items-center justify-center">
-                                        <svg class="h-10 w-full" viewBox="0 0 800 64">
-                                            {#each Array.from({ length: 100 }) as _, i}
-                                                {@const height = Math.random() * 50 + 10}
-                                                <rect
-                                                    x={i * 8}
-                                                    y={32 - height / 2}
-                                                    width="4"
-                                                    height={height}
-                                                    fill={i < 30 ? 'rgb(34, 211, 238)' : 'rgb(71, 85, 105)'}
-                                                    opacity={i < 30 ? 1 : 0.5}
-                                                />
-                                            {/each}
-                                        </svg>
+                                    <!-- Hidden Audio Element -->
+                                    <audio
+                                        bind:this={audioElement}
+                                        src="/demo-audio.mp3"
+                                        ontimeupdate={handleTimeUpdate}
+                                        onloadedmetadata={handleLoadedMetadata}
+                                        onended={() => (isPlaying = false)}
+                                    ></audio>
+
+                                    <!-- Waveform / Progress Bar -->
+                                    <div class="mb-3">
+                                        <div
+                                            class="h-10 w-full bg-slate-600/30 rounded cursor-pointer relative overflow-hidden"
+                                            onclick={handleSeek}
+                                        >
+                                            <!-- Progress fill -->
+                                            <div
+                                                class="absolute top-0 left-0 h-full bg-cyan-500/30 transition-all"
+                                                style={`width: ${duration > 0 ? (currentTime / duration) * 100 : 0}%`}
+                                            ></div>
+                                            
+                                            <!-- Waveform visualization -->
+                                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 64">
+                                                {#each Array.from({ length: 100 }) as _, i}
+                                                    {@const height = Math.random() * 50 + 10}
+                                                    {@const progress = duration > 0 ? (currentTime / duration) : 0}
+                                                    <rect
+                                                        x={i * 8}
+                                                        y={32 - height / 2}
+                                                        width="4"
+                                                        height={height}
+                                                        fill={i / 100 < progress ? 'rgb(34, 211, 238)' : 'rgb(71, 85, 105)'}
+                                                        opacity={i / 100 < progress ? 1 : 0.5}
+                                                    />
+                                                {/each}
+                                            </svg>
+                                        </div>
+                                        
+                                        <!-- Time display -->
+                                        <div class="flex justify-between text-xs text-slate-400 mt-1">
+                                            <span>{formatTime(currentTime)}</span>
+                                            <span>{formatTime(duration)}</span>
+                                        </div>
                                     </div>
 
+                                    <!-- Playback Controls -->
                                     <div class="flex items-center justify-center gap-3">
-                                        <button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-                                            <Play class="h-5 w-5" />
+                                        <button
+                                            onclick={skipBackward}
+                                            class="text-cyan-400 hover:text-cyan-300 transition-colors"
+                                            title="Skip back 10s"
+                                        >
+                                            <SkipBack class="h-5 w-5" />
                                         </button>
+                                        
+                                        <button
+                                            onclick={togglePlay}
+                                            class="text-cyan-400 hover:text-cyan-300 transition-colors"
+                                        >
+                                            {#if isPlaying}
+                                                <Pause class="h-5 w-5" />
+                                            {:else}
+                                                <Play class="h-5 w-5" />
+                                            {/if}
+                                        </button>
+                                        
+                                        <button
+                                            onclick={skipForward}
+                                            class="text-cyan-400 hover:text-cyan-300 transition-colors"
+                                            title="Skip forward 10s"
+                                        >
+                                            <SkipForward class="h-5 w-5" />
+                                        </button>
+                                        
                                         <button
                                             onclick={togglePlaybackSpeed}
-                                            class="text-xs font-medium text-slate-200 hover:text-cyan-400 transition-colors"
+                                            class="text-xs font-medium text-slate-200 hover:text-cyan-400 transition-colors px-2 py-1 rounded bg-slate-600/30"
                                         >
                                             {playbackSpeed}x
                                         </button>
-                                        <button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-                                            <SkipForward class="h-5 w-5" />
-                                        </button>
-                                        <button class="text-cyan-400 hover:text-cyan-300 transition-colors">
-                                            <Volume2 class="h-5 w-5" />
+                                        
+                                        <button
+                                            onclick={toggleMute}
+                                            class="text-cyan-400 hover:text-cyan-300 transition-colors"
+                                        >
+                                            {#if isMuted}
+                                                <VolumeX class="h-5 w-5" />
+                                            {:else}
+                                                <Volume2 class="h-5 w-5" />
+                                            {/if}
                                         </button>
                                     </div>
                                 </div>
@@ -154,7 +281,7 @@
                                 </div>
 
                                 <!-- Transcription -->
-                                <div class="rounded-lg bg-slate-700/30 p-4">
+                                <div class="rounded-lg bg-slate-700/30 p-4 max-h-32 overflow-y-auto">
                                     <div class="mb-3 text-sm font-medium text-slate-400">Transcription</div>
                                     <div class="space-y-2 text-xs">
                                         {#each transcription as item}
