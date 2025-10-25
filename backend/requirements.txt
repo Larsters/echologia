@@ -8,3 +8,7 @@ librosa
 transformers
 soundfile
 openai
+python-dotenv
+fastapi
+uvicorn
+python-multipart
