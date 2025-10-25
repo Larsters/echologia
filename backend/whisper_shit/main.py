@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Main entry point for the audio processing pipeline.
 Imports and runs the processor module.
@@ -8,7 +7,6 @@ import sys
 import os
 from pathlib import Path
 
-# Add the current directory to Python path so we can import processor
 sys.path.insert(0, os.path.dirname(__file__))
 
 from processor import process_audio_to_personas
