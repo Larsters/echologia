@@ -61,10 +61,10 @@
 					<span>21 MAY 2023 (UTC)</span>
 				</div>
 				<div class="flex items-center gap-3">
-					<button class="text-red-400 hover:text-red-300">
+					<button class="text-red-400 hover:text-red-300 transition-colors">
 						<BarChart3 class="h-5 w-5" />
 					</button>
-					<button class="text-cyan-400 hover:text-cyan-300">
+					<button class="text-cyan-400 hover:text-cyan-300 transition-colors">
 						<User class="h-5 w-5" />
 					</button>
 				</div>
@@ -91,6 +91,9 @@
 									src="/military-officer-portrait.png"
 									alt="Mustermann"
 									class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
+									onerror={(e) => {
+										e.currentTarget.style.display = 'none';
+									}}
 								/>
 								<div class="flex-1 space-y-2">
 									<div class="text-sm font-medium text-slate-400">Mustermann</div>
@@ -159,7 +162,7 @@
 									<Play class="h-6 w-6" />
 								</button>
 								<button
-									on:click={togglePlaybackSpeed}
+									onclick={togglePlaybackSpeed}
 									class="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
 								>
 									{playbackSpeed}x
@@ -245,7 +248,7 @@
 										stroke="rgb(51, 65, 85)"
 										stroke-width="16"
 									/>
-									<!-- Progress circle -->
+									<!-- Progress circle (80% of the circle) -->
 									<circle
 										cx="100"
 										cy="100"
