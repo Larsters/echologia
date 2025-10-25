@@ -9,6 +9,7 @@
     let currentTime = $state(0);
     let duration = $state(0);
     let audioElement: HTMLAudioElement;
+    let transcriptionContainer: HTMLDivElement;
 
     const relatedRecordings = [
         {
@@ -35,10 +36,24 @@
     ];
 
     const transcription = [
-        { time: '00:22', speaker: 'P2', text: 'South direction down th...' },
-        { time: '00:22', speaker: 'P1', text: 'Warm. Machinery movem...' },
-        { time: '00:22', speaker: 'P2', text: 'Cold' }
+        { time: '00:00', timeInSeconds: 0, speaker: 'spk_01', text: 'Repeat. Are you committed to the plan?' },
+        { time: '00:04', timeInSeconds: 4, speaker: 'spk_01', text: 'Committed. Serve, but methods expose to the other team.' },
+        { time: '00:08', timeInSeconds: 8, speaker: 'spk_01', text: 'We adapt. The objective is fixed. We move when the conditions allow.' },
+        { time: '00:12', timeInSeconds: 12, speaker: 'spk_02', text: 'Allow? Can you hear what\'s happening around?' },
+        { time: '00:16', timeInSeconds: 16, speaker: 'spk_02', text: 'Focus on mitigation, okay? And keep comms encrypted.' },
+        { time: '00:20', timeInSeconds: 20, speaker: 'spk_02', text: 'You know the fallback, fallbacks find on paper. On ground it\'s another story.' },
+        { time: '00:26', timeInSeconds: 26, speaker: 'spk_02', text: 'Do what you can and report any escalation.' },
+        { time: '00:30', timeInSeconds: 30, speaker: 'spk_02', text: 'Roger.' }
     ];
+
+    // Get current active transcription index
+    let activeTranscriptionIndex = $derived(
+        transcription.findIndex((item, index) => {
+            const nextItem = transcription[index + 1];
+            return currentTime >= item.timeInSeconds && 
+                   (!nextItem || currentTime < nextItem.timeInSeconds);
+        })
+    );
 
     function togglePlaybackSpeed() {
         playbackSpeed = playbackSpeed === 1.5 ? 1 : 1.5;
@@ -93,11 +108,29 @@
         audioElement.currentTime = percentage * duration;
     }
 
+    function seekToTime(timeInSeconds: number) {
+        if (!audioElement) return;
+        audioElement.currentTime = timeInSeconds;
+        if (!isPlaying) {
+            togglePlay();
+        }
+    }
+
     function formatTime(seconds: number): string {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
+
+    // Auto-scroll to active transcription
+    $effect(() => {
+        if (transcriptionContainer && activeTranscriptionIndex >= 0) {
+            const activeElement = transcriptionContainer.children[activeTranscriptionIndex + 1] as HTMLElement;
+            if (activeElement) {
+                activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+    });
 
     $effect(() => {
         return () => {
@@ -280,14 +313,38 @@
                                     </div>
                                 </div>
 
-                                <!-- Transcription -->
-                                <div class="rounded-lg bg-slate-700/30 p-4 max-h-32 overflow-y-auto">
+                                <!-- Transcription with Dynamic Highlighting -->
+                                <div 
+                                    bind:this={transcriptionContainer}
+                                    class="rounded-lg bg-slate-700/30 p-4 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800"
+                                >
                                     <div class="mb-3 text-sm font-medium text-slate-400">Transcription</div>
                                     <div class="space-y-2 text-xs">
-                                        {#each transcription as item}
-                                            <div class="flex gap-2">
-                                                <span class="text-slate-500">{item.time}</span>
-                                                <span class="text-slate-200">{item.speaker}: {item.text}</span>
+                                        {#each transcription as item, index}
+                                            <div 
+                                                class={`flex gap-2 p-2 rounded transition-all duration-300 cursor-pointer ${
+                                                    index === activeTranscriptionIndex 
+                                                        ? 'bg-cyan-500/20 border-l-2 border-cyan-400' 
+                                                        : 'hover:bg-slate-600/30'
+                                                }`}
+                                                onclick={() => seekToTime(item.timeInSeconds)}
+                                            >
+                                                <span class={`font-mono ${
+                                                    index === activeTranscriptionIndex 
+                                                        ? 'text-cyan-400 font-semibold' 
+                                                        : 'text-slate-500'
+                                                }`}>
+                                                    {item.time}
+                                                </span>
+                                                <span class={`${
+                                                    index === activeTranscriptionIndex 
+                                                        ? 'text-white font-medium' 
+                                                        : 'text-slate-200'
+                                                }`}>
+                                                    <span class={item.speaker === 'spk_01' ? 'text-yellow-400' : 'text-red-400'}>
+                                                        {item.speaker === 'spk_01' ? 'P1 (Adult)' : 'P2 (Commander)'}:
+                                                    </span> {item.text}
+                                                </span>
                                             </div>
                                         {/each}
                                     </div>
