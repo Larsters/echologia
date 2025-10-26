@@ -3,7 +3,7 @@
     import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from 'lucide-svelte';
     import Header from '$lib/components/Header.svelte';
 
-    let playbackSpeed = $state(1.5);
+    let playbackSpeed = $state(1);
     let isPlaying = $state(false);
     let isMuted = $state(false);
     let currentTime = $state(0);
@@ -215,19 +215,10 @@
                                     />
                                     <div class="flex-1 space-y-2">
                                         <div class="text-sm font-medium text-slate-400">P1</div>
-                                        <div class="grid grid-cols-3 gap-2 text-xs">
-                                            <div>
-                                                <div class="text-xs text-slate-500">AGE</div>
-                                                <div class="font-medium text-slate-200">20-30</div>
-                                            </div>
-                                            <div>
-                                                <div class="text-xs text-slate-500">SEX</div>
-                                                <div class="font-medium text-slate-200">Male</div>
-                                            </div>
-                                            <div>
-                                                <div class="text-xs text-slate-500">RANK</div>
-                                                <div class="font-medium text-yellow-500">Private</div>
-                                            </div>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-slate-200">20-30</span>
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-slate-200">Male</span>
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-yellow-500">Private</span>
                                         </div>
                                     </div>
                                 </div>
@@ -343,19 +334,10 @@
                                     />
                                     <div class="flex-1 space-y-2">
                                         <div class="text-sm font-medium text-slate-400">Mustermann</div>
-                                        <div class="grid grid-cols-3 gap-2 text-xs">
-                                            <div>
-                                                <div class="text-xs text-slate-500">AGE</div>
-                                                <div class="font-medium text-slate-200">30-45</div>
-                                            </div>
-                                            <div>
-                                                <div class="text-xs text-slate-500">SEX</div>
-                                                <div class="font-medium text-slate-200">Male</div>
-                                            </div>
-                                            <div>
-                                                <div class="text-xs text-slate-500">RANK</div>
-                                                <div class="font-medium text-red-400">Commander</div>
-                                            </div>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-slate-200">30-45</span>
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-slate-200">Male</span>
+                                            <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-red-400">Commander</span>
                                         </div>
                                     </div>
                                 </div>
