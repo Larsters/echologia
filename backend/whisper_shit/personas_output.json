@@ -23,7 +23,7 @@
     {
       "start": 4.0,
       "end": 8.0,
-      "speaker_id": "spk_01",
+      "speaker_id": "spk_02",
       "text": "Committed. Serve, but methods expose to the other team.",
       "language": "en",
       "emotion": {
@@ -56,7 +56,7 @@
     {
       "start": 16.0,
       "end": 20.0,
-      "speaker_id": "spk_02",
+      "speaker_id": "spk_01",
       "text": "Focus on mitigation, okay? And keep comms encrypted.",
       "language": "en",
       "emotion": {
@@ -68,7 +68,18 @@
       "start": 20.0,
       "end": 26.0,
       "speaker_id": "spk_02",
-      "text": "You know the fallback, fallbacks find on paper. On ground it's another story.",
+      "text": "You know the fallback.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+        {
+      "start": 20.0,
+      "end": 26.0,
+      "speaker_id": "spk_02",
+      "text": "Fallbacks find on paper. On ground it's another story.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -78,7 +89,7 @@
     {
       "start": 26.0,
       "end": 30.0,
-      "speaker_id": "spk_02",
+      "speaker_id": "spk_01",
       "text": "Do what you can and report any escalation.",
       "language": "en",
       "emotion": {

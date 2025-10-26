@@ -26,7 +26,9 @@
         }
     ];
 
-    const tags = ['Niu York', 'Indoor', 'High Rank', 'Minors detected'];
+    let tags = $state(['Niu York', 'Indoor', 'High Rank', 'Minors detected']);
+    let shootingTagAdded = $state(false);
+    let churchBellsTagAdded = $state(false);
 
     const intelSummary = [
         'Immediate reaction advised.',
@@ -36,14 +38,15 @@
     ];
 
     const transcription = [
-        { time: '00:00', timeInSeconds: 0, speaker: 'spk_01', text: 'Repeat. Are you committed to the plan?' },
+        { time: '00:00', timeInSeconds: 0, speaker: 'spk_02', text: 'Repeat. Are you committed to the plan?' },
         { time: '00:04', timeInSeconds: 4, speaker: 'spk_01', text: 'Committed. Serve, but methods expose to the other team.' },
-        { time: '00:08', timeInSeconds: 8, speaker: 'spk_01', text: 'We adapt. The objective is fixed. We move when the conditions allow.' },
-        { time: '00:12', timeInSeconds: 12, speaker: 'spk_02', text: 'Allow? Can you hear what\'s happening around?' },
+        { time: '00:08', timeInSeconds: 8, speaker: 'spk_02', text: 'We adapt. The objective is fixed. We move when the conditions allow.' },
+        { time: '00:12', timeInSeconds: 12, speaker: 'spk_01', text: 'Allow? Can you hear what\'s happening around?' },
         { time: '00:16', timeInSeconds: 16, speaker: 'spk_02', text: 'Focus on mitigation, okay? And keep comms encrypted.' },
-        { time: '00:20', timeInSeconds: 20, speaker: 'spk_02', text: 'You know the fallback, fallbacks find on paper. On ground it\'s another story.' },
+        { time: '00:20', timeInSeconds: 20, speaker: 'spk_02', text: 'You know the fallback.' },
+        { time: '00:21', timeInSeconds: 21, speaker: 'spk_01', text: 'Fallbacks find on paper. On ground it\'s another story.' },
         { time: '00:26', timeInSeconds: 26, speaker: 'spk_02', text: 'Do what you can and report any escalation.' },
-        { time: '00:30', timeInSeconds: 30, speaker: 'spk_02', text: 'Roger.' }
+        { time: '00:30', timeInSeconds: 30, speaker: 'spk_01', text: 'Roger.' }
     ];
 
     // Get current active transcription index
@@ -92,6 +95,18 @@
     function handleTimeUpdate() {
         if (!audioElement) return;
         currentTime = audioElement.currentTime;
+        
+        // Add "Shooting detected" tag at 7th second
+        if (currentTime >= 7 && !shootingTagAdded) {
+            tags = [...tags, 'Shooting detected'];
+            shootingTagAdded = true;
+        }
+        
+        // Add "Church Bells detected" tag at 30th second
+        if (currentTime >= 30 && !churchBellsTagAdded) {
+            tags = [...tags, 'Church Bells detected'];
+            churchBellsTagAdded = true;
+        }
     }
 
     function handleLoadedMetadata() {
@@ -164,7 +179,7 @@
                                 <!-- Mustermann -->
                                 <div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
                                     <img
-                                        src="/military-officer-portrait.png"
+                                        src="/assets/unknown.png"
                                         alt="Mustermann"
                                         class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
                                         onerror={(e) => {
@@ -172,7 +187,7 @@
                                         }}
                                     />
                                     <div class="flex-1 space-y-2">
-                                        <div class="text-sm font-medium text-slate-400">Mustermann</div>
+                                        <div class="text-sm font-medium text-slate-400">P1</div>
                                         <div class="grid grid-cols-3 gap-2 text-xs">
                                             <div>
                                                 <div class="text-xs text-slate-500">AGE</div>
@@ -291,11 +306,16 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- P2 Commander -->
                                 <div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
-                                    <div class="flex h-20 w-20 items-center justify-center rounded-lg bg-slate-600/50">
-                                        <div class="text-4xl text-slate-400">?</div>
-                                    </div>
+                                    <img
+                                        src="/assets/commander.png"
+                                        alt="P2"
+                                        class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
+                                        onerror={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
                                     <div class="flex-1 space-y-2">
-                                        <div class="text-sm font-medium text-slate-400">P2</div>
+                                        <div class="text-sm font-medium text-slate-400">Mustermann</div>
                                         <div class="grid grid-cols-3 gap-2 text-xs">
                                             <div>
                                                 <div class="text-xs text-slate-500">AGE</div>

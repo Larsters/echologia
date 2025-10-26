@@ -61,53 +61,62 @@
 						<!-- Personnel Cards - Stacked Vertically -->
 						<div class="space-y-4">
 							<!-- Mustermann -->
-							<div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
-								<img
-									alt="Mustermann"
-									class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
-								/>
-								<div class="flex-1 space-y-2">
-									<div class="text-sm font-medium text-slate-400">Mustermann</div>
-									<div class="grid grid-cols-3 gap-4 text-sm">
-										<div>
-											<div class="text-xs text-slate-500">AGE</div>
-											<div class="font-medium text-slate-200">20-30</div>
-										</div>
-										<div>
-											<div class="text-xs text-slate-500">SEX</div>
-											<div class="font-medium text-slate-200">Male</div>
-										</div>
-										<div>
-											<div class="text-xs text-slate-500">RANK</div>
-											<div class="font-medium text-yellow-500">Private</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                                <div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
+                                    <img
+                                        src="/assets/commander.png"
+                                        alt="Mustermann"
+                                        class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
+                                        onerror={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                    <div class="flex-1 space-y-2">
+                                        <div class="text-sm font-medium text-slate-400">Mustermann</div>
+                                        <div class="grid grid-cols-3 gap-2 text-xs">
+                                            <div>
+                                                <div class="text-xs text-slate-500">AGE</div>
+                                                <div class="font-medium text-slate-200">20-30</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-slate-500">SEX</div>
+                                                <div class="font-medium text-slate-200">Male</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-slate-500">RANK</div>
+                                                <div class="font-medium text-yellow-500">Private</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 							<!-- P2 Commander -->
-							<div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
-								<div class="flex h-20 w-20 items-center justify-center rounded-lg bg-slate-600/50">
-									<div class="text-4xl text-slate-400">?</div>
-								</div>
-								<div class="flex-1 space-y-2">
-									<div class="text-sm font-medium text-slate-400">P2</div>
-									<div class="grid grid-cols-3 gap-4 text-sm">
-										<div>
-											<div class="text-xs text-slate-500">AGE</div>
-											<div class="font-medium text-slate-200">30-45</div>
-										</div>
-										<div>
-											<div class="text-xs text-slate-500">SEX</div>
-											<div class="font-medium text-slate-200">Male</div>
-										</div>
-										<div>
-											<div class="text-xs text-slate-500">RANK</div>
-											<div class="font-medium text-red-400">Commander</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                                <div class="flex items-center gap-4 rounded-lg bg-slate-700/30 p-4">
+                                    <img
+                                        src="/assets/unknown.png"
+                                        alt="P2"
+                                        class="h-20 w-20 rounded-lg object-cover bg-slate-600/50"
+                                        onerror={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                    <div class="flex-1 space-y-2">
+                                        <div class="text-sm font-medium text-slate-400">P2</div>
+                                        <div class="grid grid-cols-3 gap-2 text-xs">
+                                            <div>
+                                                <div class="text-xs text-slate-500">AGE</div>
+                                                <div class="font-medium text-slate-200">30-45</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-slate-500">SEX</div>
+                                                <div class="font-medium text-slate-200">Male</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-slate-500">RANK</div>
+                                                <div class="font-medium text-red-400">Commander</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 							<!-- Audio Player - Smaller -->
 							<div class="rounded-lg bg-slate-700/30 p-4">
