@@ -1,19 +1,19 @@
 {
-  "session_id": "session_2025_10_25_165314",
+  "session_id": "session_2025_10_26_005836",
   "meta": {
-    "duration_sec": 34.1,
+    "duration_sec": 33.3,
     "sampling_rate": 16000,
     "model_asr": "faster-whisper-base",
     "model_diarization": "pyannote/speaker-diarization-3.1",
     "model_age_gender": "audeering/wav2vec2-large-robust-24-ft-age-gender",
-    "date_processed": "2025-10-25T16:53:14.164230Z"
+    "date_processed": "2025-10-26T00:58:36.314417Z"
   },
   "segments": [
     {
       "start": 0.0,
-      "end": 5.0,
+      "end": 4.0,
       "speaker_id": "spk_01",
-      "text": "Hello there Alex, I hope you're having a great day. How do you enjoy this hackathon right now?",
+      "text": "Repeat. Are you committed to the plan?",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -21,10 +21,21 @@
       }
     },
     {
-      "start": 5.0,
-      "end": 12.0,
+      "start": 4.0,
+      "end": 8.0,
       "speaker_id": "spk_02",
-      "text": "It's very good event, I really enjoy and it's nice because we'll do it on a few days.",
+      "text": "Committed. Serve, but methods expose to the other team.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+    {
+      "start": 8.0,
+      "end": 12.0,
+      "speaker_id": "spk_01",
+      "text": "We adapt. The objective is fixed. We move when the conditions allow.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -34,8 +45,8 @@
     {
       "start": 12.0,
       "end": 16.0,
-      "speaker_id": "spk_01",
-      "text": "Do you like any girls around here? What do you think?",
+      "speaker_id": "spk_02",
+      "text": "Allow? Can you hear what's happening around?",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -44,9 +55,9 @@
     },
     {
       "start": 16.0,
-      "end": 21.0,
+      "end": 20.0,
       "speaker_id": "spk_01",
-      "text": "Any girls that you find attractive here on the hackathon?",
+      "text": "Focus on mitigation, okay? And keep comms encrypted.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -54,10 +65,21 @@
       }
     },
     {
-      "start": 22.0,
+      "start": 20.0,
       "end": 26.0,
-      "speaker_id": "spk_01",
-      "text": "We have a sausage party here.",
+      "speaker_id": "spk_02",
+      "text": "You know the fallback.",
+      "language": "en",
+      "emotion": {
+        "label": "neutral",
+        "confidence": 0.8
+      }
+    },
+        {
+      "start": 20.0,
+      "end": 26.0,
+      "speaker_id": "spk_02",
+      "text": "Fallbacks find on paper. On ground it's another story.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -68,7 +90,7 @@
       "start": 26.0,
       "end": 30.0,
       "speaker_id": "spk_01",
-      "text": "It's pretty cold here and we're excited.",
+      "text": "Do what you can and report any escalation.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -79,7 +101,7 @@
       "start": 30.0,
       "end": 33.0,
       "speaker_id": "spk_02",
-      "text": "Alex, are you last words?",
+      "text": "Roger.",
       "language": "en",
       "emotion": {
         "label": "neutral",
@@ -89,15 +111,15 @@
   ],
   "personas": [
     {
-      "speaker_id": "spk_01",
-      "speaking_time_sec": 16.03,
-      "speaking_percent": 54.32,
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 13.72,
+      "speaking_percent": 58.36,
       "languages": {
         "en": 1.0
       },
       "sex": {
         "label": "male",
-        "confidence": 0.995
+        "confidence": 0.997
       },
       "age": {
         "label": "Teenager",
@@ -110,38 +132,38 @@
       "name": "Unknown"
     },
     {
-      "speaker_id": "spk_02",
-      "speaking_time_sec": 13.48,
-      "speaking_percent": 45.68,
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 9.79,
+      "speaking_percent": 41.64,
       "languages": {
         "en": 1.0
       },
       "sex": {
         "label": "male",
-        "confidence": 0.996
+        "confidence": 0.997
       },
       "age": {
-        "label": "Teenager",
-        "mean_estimate": 25,
+        "label": "Adult",
+        "mean_estimate": 36,
         "confidence": 0.8
       },
       "mood_summary": {
         "dominant": "neutral"
       },
-      "name": "Alex"
+      "name": "Unknown"
     }
   ],
   "hierarchy": [
     {
-      "speaker_id": "spk_01",
-      "speaking_time_sec": 16.03,
-      "speaking_percent": 54.32,
+      "speaker_id": "spk_02",
+      "speaking_time_sec": 13.72,
+      "speaking_percent": 58.36,
       "languages": {
         "en": 1.0
       },
       "sex": {
         "label": "male",
-        "confidence": 0.995
+        "confidence": 0.997
       },
       "age": {
         "label": "Teenager",
@@ -154,25 +176,25 @@
       "name": "Unknown"
     },
     {
-      "speaker_id": "spk_02",
-      "speaking_time_sec": 13.48,
-      "speaking_percent": 45.68,
+      "speaker_id": "spk_01",
+      "speaking_time_sec": 9.79,
+      "speaking_percent": 41.64,
       "languages": {
         "en": 1.0
       },
       "sex": {
         "label": "male",
-        "confidence": 0.996
+        "confidence": 0.997
       },
       "age": {
-        "label": "Teenager",
-        "mean_estimate": 25,
+        "label": "Adult",
+        "mean_estimate": 36,
         "confidence": 0.8
       },
       "mood_summary": {
         "dominant": "neutral"
       },
-      "name": "Alex"
+      "name": "Unknown"
     }
   ],
   "global_emotion_trend": {
