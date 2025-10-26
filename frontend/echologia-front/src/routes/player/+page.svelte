@@ -29,6 +29,7 @@
     let tags = $state(['Niu York', 'Indoor', 'High Rank', 'Minors detected']);
     let shootingTagAdded = $state(false);
     let churchBellsTagAdded = $state(false);
+    let threatPercentage = $state(0);
 
     const intelSummary = [
         'Immediate reaction advised.',
@@ -107,6 +108,11 @@
             tags = [...tags, 'Church Bells detected'];
             churchBellsTagAdded = true;
         }
+        
+        // Increase threat percentage to 80% at 15th second (only after reaching 75%)
+        if (currentTime >= 15 && threatPercentage >= 75 && threatPercentage < 80) {
+            threatPercentage = 80;
+        }
     }
 
     function handleLoadedMetadata() {
@@ -145,6 +151,27 @@
                 activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
+    });
+
+    // Animate threat percentage from 0 to 75 on page load
+    $effect(() => {
+        const targetPercentage = 75;
+        const duration = 2000; // 2 seconds animation
+        const steps = 75; // One step per integer
+        const interval = duration / steps; // Time per step
+        
+        let currentStep = 0;
+        const timer = setInterval(() => {
+            currentStep++;
+            threatPercentage = Math.min(currentStep, targetPercentage);
+            
+            if (currentStep >= steps) {
+                clearInterval(timer);
+                threatPercentage = targetPercentage;
+            }
+        }, interval);
+        
+        return () => clearInterval(timer);
     });
 
     $effect(() => {
@@ -396,11 +423,13 @@
                                     </div>
 
                                     <div class="space-y-2">
-                                        {#each recording.details as detail}
-                                            <div class="text-sm text-slate-400">
-                                                {detail}
-                                            </div>
-                                        {/each}
+                                        <div class="flex flex-wrap gap-2">
+                                            {#each recording.details as detail}
+                                                <span class="rounded-md bg-slate-700/30 px-3 py-1.5 text-sm text-slate-200">
+                                                    {detail}
+                                                </span>
+                                            {/each}
+                                        </div>
                                         <div class="pt-2 text-xs text-slate-500">{recording.date}</div>
                                     </div>
                                 </div>
@@ -430,7 +459,7 @@
                                             stroke="rgb(51, 65, 85)"
                                             stroke-width="16"
                                         />
-                                        <!-- Progress circle (80% of the circle) -->
+                                        <!-- Progress circle -->
                                         <circle
                                             cx="100"
                                             cy="100"
@@ -438,12 +467,13 @@
                                             fill="none"
                                             stroke="rgb(248, 113, 113)"
                                             stroke-width="16"
-                                            stroke-dasharray={`${80 * 2 * Math.PI * 0.8} ${80 * 2 * Math.PI}`}
+                                            stroke-dasharray={`${80 * 2 * Math.PI * (threatPercentage / 100)} ${80 * 2 * Math.PI}`}
                                             stroke-linecap="round"
+                                            class="transition-all duration-1000 ease-out"
                                         />
                                     </svg>
                                     <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <div class="text-5xl font-bold text-slate-200">80%</div>
+                                        <div class="text-5xl font-bold text-slate-200 transition-all duration-1000 ease-out">{threatPercentage}%</div>
                                         <div class="text-sm font-medium uppercase tracking-wide text-red-400">Critical</div>
                                     </div>
                                 </div>
